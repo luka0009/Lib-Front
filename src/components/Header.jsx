@@ -7,7 +7,7 @@ export default function Header() {
   // console.log(data);
   const navigate = useNavigate();
   const handleLogOut = async () => {
-    fetch("http://localhost:5000/api/auth/logout");
+    fetch("https://lib-api.onrender.com/api/auth/logout");
     localStorage.setItem("user", null);
     navigate("/login");
   };

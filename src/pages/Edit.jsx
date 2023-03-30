@@ -34,7 +34,7 @@ const Edit = () => {
       image,
     };
     console.log(updateData, id);
-    const response = await fetch(`http://localhost:5000/api/update/${id}`, {
+    const response = await fetch(`https://lib-api.onrender.com/api/update/${id}`, {
       method: "PATCH",
       body: JSON.stringify(updateData),
       headers: {
