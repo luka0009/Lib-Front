@@ -30,8 +30,8 @@ const LogIn = () => {
   const [loginUser, { data: loginData, isLoading, isError, error }] =
     useLogInUserMutation();
   const submitHandler = async (data) => {
-    await loginUser(data);
     setLoginState(true);
+    await loginUser(data);
     if (!isError) {
       dispatch(setLogin(true));
       // await console.log(loginData);

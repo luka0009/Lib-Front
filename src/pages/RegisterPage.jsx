@@ -29,8 +29,8 @@ const RegisterPage = () => {
   const [registerUser, registerResults] = useRegisterUserMutation();
   const { isError, isSuccess, error, originalArgs } = registerResults;
   const submitHandler = async (data) => {
-    await registerUser(data);
     setLoginState(true);
+    await registerUser(data);
     if (!isError) {
       dispatch(setLogin(true));
       // localStorage.setItem("user", JSON.stringify(data));
