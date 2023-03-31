@@ -33,7 +33,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-xl text-gray-800 mb-8"
             >
-              Manage your Library easily. Explore the world of books and
+              Explore the world of books and
               knowledge with us.
             </motion.p>
             <motion.div
