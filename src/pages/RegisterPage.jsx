@@ -43,7 +43,7 @@ const RegisterPage = () => {
       setLoginState(false);
       // localStorage.setItem("user", JSON.stringify(registerResults.originalArgs));
       navigate("/login");
-    }
+    } 
   }, [registerResults]);
   const password = watch("password");
   return (
@@ -183,7 +183,7 @@ const RegisterPage = () => {
           {isError && (
             <p className="text-red-500 text-xl">Error: {error.data.message}</p>
           )}{" "}
-          {loginState && (
+          {!isError && loginState && (
             <p className="text-orange-800 text-xl">
               Loading... <br /> Please wait. it might take a while
             </p>
