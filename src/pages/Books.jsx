@@ -21,22 +21,30 @@ export default function Books() {
   }, [data, refetch]);
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <ClipLoader
-          css={override}
-          size={150}
-          color={"#123abc"}
-          loading={isLoading}
-        />
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="text-2xl mt-32 mb-[-170px]">Please Wait. It might take a while to load...</span>
+        <div className="flex items-center justify-center h-screen">
+          <ClipLoader
+            css={override}
+            size={150}
+            color={"#123abc"}
+            loading={isLoading}
+          />
+        </div>
       </div>
     );
   }
   const user = JSON.parse(localStorage.getItem("user"));
-  const isLoggedIn = user !== null && user !== "null" && user !== "undefined" && user.token;
+  const isLoggedIn =
+    user !== null && user !== "null" && user !== "undefined" && user.token;
   return (
     <div className="bg-[#121212] bg-gradient-to-tl from-pink-800 to-purple-900 text-white mt-[-49px] min-h-screen">
       <div className="flex flex-col items-center justify-center mt-5">
-        {!isLoggedIn && <span className="mt-4 -mb-5 text-red-500 bg-gray-900 p-2 text-lg">Note: Please, log in to be unlock all features</span>}
+        {!isLoggedIn && (
+          <span className="mt-4 -mb-3 text-red-500 bg-gray-900 p-2 text-lg">
+            Note: Please, log in to unlock all features
+          </span>
+        )}
         <h1 className="mt-3"> Any New Books? </h1>
         {/* <button>Add Book</button> */}
         <Link to="/newbook">
@@ -47,9 +55,10 @@ export default function Books() {
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ml-4 md:ml-8">
-        {data.length > 0 && data?.map((book, index) => {
-          return <Book key={book._id} {...book} />;
-        })}
+        {data.length > 0 &&
+          data?.map((book, index) => {
+            return <Book key={book._id} {...book} />;
+          })}
       </div>
     </div>
   );

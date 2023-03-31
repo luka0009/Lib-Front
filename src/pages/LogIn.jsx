@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -25,11 +25,13 @@ const LogIn = () => {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loginState, setLoginState] = useState(false);
   // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [loginUser, { data: loginData, isError, error }] =
+  const [loginUser, { data: loginData, isLoading, isError, error }] =
     useLogInUserMutation();
   const submitHandler = async (data) => {
     await loginUser(data);
+    setLoginState(true);
     if (!isError) {
       dispatch(setLogin(true));
       // await console.log(loginData);
@@ -52,9 +54,11 @@ const LogIn = () => {
   useEffect(() => {
     // console.log(isLoggedIn);
     console.log("loginData------------", loginData);
-    if (loginData){
-       localStorage.setItem("user", JSON.stringify(loginData));
-       navigate('/books');
+
+    if (loginData) {
+      localStorage.setItem("user", JSON.stringify(loginData));
+      setLoginState(false);
+      navigate("/books");
     }
   }, [loginData]);
   const password = watch("password");
@@ -131,6 +135,11 @@ const LogIn = () => {
           </div>
           {isError && (
             <p className="text-red-500 text-xl">Error: {error.data.message}</p>
+          )}
+          {loginState && (
+            <p className="text-orange-800 text-xl">
+              Loading... <br /> Please wait. it might take a while
+            </p>
           )}
           <button
             type="submit"

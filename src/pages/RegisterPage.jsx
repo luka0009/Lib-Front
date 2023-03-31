@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../store/authApi";
@@ -25,10 +25,12 @@ const RegisterPage = () => {
   });
   const dispatch = useDispatch();
   // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const [loginState, setLoginState] = useState(false);
   const [registerUser, registerResults] = useRegisterUserMutation();
   const { isError, isSuccess, error, originalArgs } = registerResults;
   const submitHandler = async (data) => {
     await registerUser(data);
+    setLoginState(true);
     if (!isError) {
       dispatch(setLogin(true));
       // localStorage.setItem("user", JSON.stringify(data));
@@ -36,12 +38,13 @@ const RegisterPage = () => {
   };
   useEffect(() => {
     console.log(registerResults);
-    if(registerResults.isSuccess) {
-      console.log('success');
+    if (registerResults.isSuccess) {
+      console.log("success");
+      setLoginState(false);
       // localStorage.setItem("user", JSON.stringify(registerResults.originalArgs));
-      navigate('/login');
+      navigate("/login");
     }
-  }, [registerResults])
+  }, [registerResults]);
   const password = watch("password");
   return (
     // <MainLayout>
@@ -179,6 +182,11 @@ const RegisterPage = () => {
           </div>
           {isError && (
             <p className="text-red-500 text-xl">Error: {error.data.message}</p>
+          )}{" "}
+          {loginState && (
+            <p className="text-orange-800 text-xl">
+              Loading... <br /> Please wait. it might take a while
+            </p>
           )}
           <button
             type="submit"
